@@ -1,0 +1,11 @@
+{
+    "name" : "AjaxWsPerformance ",
+    "description" : "Ajax vs Websocket performance test server",
+    "author" : "Atul P",
+    "dependencies": {
+        "express": ">= 4.8.5",
+        "express-ws": ">= 0.1.0",
+        "phantom": ">= 0.6.5", 
+        "randomstring": ">= 1.0.3"
+    }    
+}

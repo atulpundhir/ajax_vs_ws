@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<head>
+	<body>
+        <div id="left">
+         <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+         <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+         <div id="start">
+             <input id="connect" type="submit" onclick="startTest();" value="Start" />
+             <input id="round" type="submit" onclick="resetTest();" value="Reset" />
+        </div>
+        <script>
+		var w = [];
+
+function startWorker(cnt){
+    if(typeof(Worker) !== "undefined"){
+        if(typeof(w[cnt]) == "undefined"){
+            w[cnt] = new Worker("phantom_ws.js");
+            appendItem("Starting Worker - "+cnt);
+            w[cnt].start_time = new Date().getTime();
+        }
+        w[cnt].onmessage = function(event){
+            //end_date = new Date().getTime();
+            appendItem("Response Received - "+cnt);
+        };
+    }else{
+        document.getElementById("result").innerHTML = "Sorry !! No Web Worker Support";
+    }
+}
+
+function stopWorker(cnt){
+        w[cnt].terminate();
+}
+
+function startTest(){
+   if(w.length > 0){
+        w = [];
+   }
+   for(var i=1; i <= 60; ++i){
+        startWorker(i);
+   }
+}
+
+function resetTest(){
+    var xmlhttp;
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange=function(){
+    if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+        clearItems();
+        console.log("Good");
+        }
+    }
+
+    xmlhttp.open("GET", "http://durian.aucmint.com:9001/reset_ws");
+    xmlhttp.send();
+}
+
+		</script>
+    </div>
+    <div id="right">
+           <ul id="log"></ul>
+    </div>
+	</body>
+    <script>
+    function appendItem(msg){
+        var ul = document.getElementById('log');
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(msg));
+        ul.appendChild(li);
+    }
+
+    function clearItems(){
+        document.getElementById("log").innerHTML = '';
+    }
+
+   </script>
+
+</head>

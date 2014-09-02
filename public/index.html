@@ -1,0 +1,137 @@
+    <html>
+        <head>
+               <title>Ajax Vs Websocket Comparison </title>
+               <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+               <script src="http://dimplejs.org/dist/dimple.v2.1.0.min.js"></script>
+               <link href="css/style.css" rel="stylesheet" type="text/css" />
+               <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+        </head>
+        <body>
+            <div id="left">
+                <div class="title_left"> <h1>Ajax </h1>  </div>
+                <div>
+                    <table class="flat-table flat-table-1">
+                        <tr>
+                            <th>Description</th>
+                            <th>Count</th>
+                        </tr>
+                        <tr >
+                            <td>Total Clients</td>
+                            <td><span id="ajax_clients"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Total Messages</td>
+                            <td><span id="ajax_msg"></span</td>
+                        </tr>
+                        <tr>
+                            <td>Min Time</td>
+                            <td><span id="ajax_min_time"></span</td>
+                        </tr>
+                        <tr>
+                            <td>Avg Time</td>
+                            <td><span id="ajax_avg_time"></span</td>
+                        </tr>
+                        <tr>
+                            <td>Max Time</td>
+                            <td><span id="ajax_max_time"></span</td>
+                        </tr>
+                    </table>
+                </div>
+
+                 <script type="text/javascript">
+                    var $ = function(id){return document.getElementById(id)};
+                    var svg= dimple.newSvg("#left", 400, 200);
+                    d3.csv("/data/ajax.csv", function(data){
+                        min_time = d3.min(data, function(d) {return parseInt(d.Time)});
+                        max_time = d3.max(data, function(d) {return parseInt(d.Time)});
+                        sum_time = d3.sum(data, function(d) {return parseInt(d.Time)});
+                        avg_time = parseInt(parseInt(sum_time) / data.length);
+
+                        d = [
+                            {"Id": "min", "Time": min_time},
+                            {"Id": "mean", "Time": avg_time},
+                            {"Id": "max", "Time": max_time},
+                        ]
+
+                        var chart = new dimple.chart(svg,d);
+                        chart.setBounds(50, 10, 480, 130)
+                        chart.addMeasureAxis("x",  "Time");
+                        chart.addCategoryAxis("y", "Id");
+                        chart.addSeries("Time Taken", dimple.plot.bar);
+                        chart.addLegend(60, 10, 510, 20, "right");
+                        chart.draw();
+                        $("ajax_clients").innerHTML = 2;
+                        $("ajax_msg").innerHTML = data.length;
+                        $("ajax_min_time").innerHTML = min_time + " ms";
+                        $("ajax_max_time").innerHTML = max_time + " ms";
+                        $("ajax_avg_time").innerHTML = avg_time + " ms";
+                    });
+
+                </script>
+            </div>
+            <div id="right">
+                <div class="title_right"> <h1> WebSocket </h1></div>
+                 <div>
+                    <table class="flat-table flat-table-2">
+                        <tr>
+                            <th>Description</th>
+                            <th>Count</th>
+                        </tr>
+                        <tr >
+                            <td>Total Clients</td>
+                            <td><span id="ws_clients"></span</td>
+                        </tr>
+                        <tr>
+                            <td>Total Messages</td>
+                            <td><span id="ws_msg"></span</td>
+                        </tr>
+                        <tr>
+                            <td>Min Time</td>
+                            <td><span id="ws_min_time"></span</td>
+                        </tr>
+                        <tr>
+                            <td>Avg Time</td>
+                            <td><span id="ws_avg_time"></span</td>
+                        </tr>
+                        <tr>
+                            <td>Max Time</td>
+                            <td><span id="ws_max_time"></span</td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                 <script type="text/javascript">
+                    var ws_svg = dimple.newSvg("#right", 400, 200);
+                    d3.csv("/data/ws.csv", function(data){
+                        min_time = d3.min(data, function(d) {return parseInt(d.Time)});
+                        max_time = d3.max(data, function(d) {return parseInt(d.Time)});
+                        sum_time = d3.sum(data, function(d) {return parseInt(d.Time)});
+                        avg_time = parseInt(parseInt(sum_time) / data.length);
+
+                        var d = [
+                            {"Id": "min", "Time": min_time},
+                            {"Id": "mean", "Time": avg_time},
+                            {"Id": "max", "Time": max_time},
+                        ]
+
+                        var chart_ws = new dimple.chart(ws_svg,d);
+                        chart_ws.setBounds(50, 10, 480, 130)
+                        chart_ws.addMeasureAxis("x",  "Time");
+                        chart_ws.addCategoryAxis("y", "Id");
+                        chart_ws.addSeries("Time Taken", dimple.plot.bar);
+                        chart_ws.addLegend(60, 10, 510, 20, "right");
+                        chart_ws.draw();
+                        $("ws_clients").innerHTML = 2;
+                        $("ws_msg").innerHTML = data.length;
+                        $("ws_min_time").innerHTML = min_time + " ms";
+                        $("ws_max_time").innerHTML = max_time + " ms";
+                        $("ws_avg_time").innerHTML = avg_time + " ms";
+                    });
+                </script>
+
+            </div>
+
+        </body>
+
+</html>
