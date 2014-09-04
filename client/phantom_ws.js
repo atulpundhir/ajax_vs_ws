@@ -21,7 +21,7 @@ function onClose(evt){
 
 function onMessage(evt){
     diff = Date.now() - startTime;
-    if(diff < 10000){
+    if(diff < 20000){
         var res = JSON.parse(evt.data);
         websocket.send(res.timestamp);
     }

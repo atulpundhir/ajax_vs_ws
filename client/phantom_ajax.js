@@ -6,7 +6,7 @@ function fireAjax(url){
     xmlhttp.onreadystatechange=function(){
         if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
             var diff = Date.now() - startTime;
-            if(diff < 10000){
+            if(diff < 20000){
                 var parseData = JSON.parse(xmlhttp.responseText);
                 resendData(parseData.timestamp);
                 }
@@ -30,7 +30,7 @@ function resendData(t){
         if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
 
             var diff = Date.now() - startTime;
-            if(diff < 10000){
+            if(diff < 20000){
 
             fireAjax("http://durian.aucmint.com:9001/");
         //    postMessage(xmlhttp.responseText);
