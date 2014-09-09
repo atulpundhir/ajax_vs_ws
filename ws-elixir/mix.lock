@@ -1,0 +1,5 @@
+%{"cowboy": {:git, "https://github.com/extend/cowboy", "b57f94661f5fd186f55eb0fead49849e0b1399d1", []},
+  "cowlib": {:git, "https://github.com/ninenines/cowlib.git", "d544a494af4dbc810fc9c15eaf5cc050cced1501", [ref: "1.0.0"]},
+  "gproc": {:git, "https://github.com/esl/gproc", "1f12fbf6fd75cb4fa6e7b38f331fe3e1fdd2adf0", []},
+  "jiffy": {:git, "https://github.com/davisp/jiffy", "5cd89c1eda3801bdef790b1e7c0e09259332c0fc", []},
+  "ranch": {:git, "https://github.com/ninenines/ranch.git", "adf1822defc2b7cfdc7aca112adabfa1d614043c", [ref: "1.0.0"]}}
