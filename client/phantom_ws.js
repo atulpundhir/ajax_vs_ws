@@ -1,10 +1,14 @@
-var wsUri = "ws://durian.aucmint.com:9001/ws";
+var wsUri = ["ws://durian.aucmint.com:9002/ws", "ws://durian.aucmint.com:9003/ws", "ws://durian.aucmint.com:9006/ws", "ws://durian.aucmint.com:9007/ws"];
 var output;
 var cnt = 100;
 var startTime = Date.now();
 
+function getMessage() {
+       return wsUri[Math.floor(Math.random() * wsUri.length)];
+}
+
 function init(){
-    websocket = new WebSocket(wsUri);
+    websocket = new WebSocket(getMessage());
     websocket.onopen = function(evt) {onOpen(evt);};
     websocket.onclose = function(evt) { onClose(evt);};
     websocket.onmessage = function(evt) { onMessage(evt);};
@@ -12,7 +16,7 @@ function init(){
 }
 
 function onOpen(evt){
-  //  console.log("Connected");
+    console.log("Connected");
 }
 
 function onClose(evt){

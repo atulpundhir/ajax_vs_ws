@@ -1,5 +1,11 @@
+var wsUri = ["http://durian.aucmint.com:9002/", "http://durian.aucmint.com:9003/", "http://durian.aucmint.com:9006/", "http://durian.aucmint.com:9007/"];
 var cnt= 10;
 var startTime = Date.now();
+
+function getMessage() {
+   return wsUri[Math.floor(Math.random() * wsUri.length)];
+}
+
 function fireAjax(url){
     var xmlhttp;
     xmlhttp = new XMLHttpRequest();
@@ -20,7 +26,7 @@ function fireAjax(url){
 }
 
 
-fireAjax("http://durian.aucmint.com:9001/");
+fireAjax(getMessage());
 
 
 function resendData(t){
@@ -32,14 +38,15 @@ function resendData(t){
             var diff = Date.now() - startTime;
             if(diff < 20000){
 
-            fireAjax("http://durian.aucmint.com:9001/");
+            fireAjax(getMessage());
         //    postMessage(xmlhttp.responseText);
             }
            // console.log("Good");
         }
     };
 
-    xmlhttp.open("GET", "http://durian.aucmint.com:9001/?timestamp="+t);
+    uri =  getMessage()    
+    xmlhttp.open("GET", uri+"?timestamp="+t);
     xmlhttp.send();
 }
 
